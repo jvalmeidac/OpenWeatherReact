@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { FiSearch } from "react-icons/fi";
+import { FaSearch } from "react-icons/fa";
 import api from "./services/api";
 
 function App() {
   const key = "ba11e837904d6c52db0804ff65411068";
 
   const [city, setCity] = useState("");
-  const [cityName, setCityName] = useState("");
+  const [cityName, setCityName] = useState("Digite sua cidade");
   const [temp, setTemp] = useState(0);
   const [tempMin, setTempMin] = useState(0);
   const [tempMax, setTempMax] = useState(0);
@@ -73,15 +73,15 @@ function App() {
           onChange={e => setCity(e.target.value)}
           target="_black"
         />
-        <FiSearch size={50} color="#e0e0e6" onClick={() => getDatas()} />
+        <FaSearch size={30} color="#e0e0e6" onClick={() => getDatas()} />
         <div class="date">{dataFormat(new Date())}</div>
         <h2>
           {Math.round(temp)}
           <span>°</span>
         </h2>
         <h6>{description}</h6>
-        <h6>Máxima: {tempMax}</h6>
-        <h6>Mínima: {tempMin}</h6>
+        <h6>Máxima: {Math.round(tempMax)}°</h6>
+        <h6>Mínima: {Math.round(tempMin)}°</h6>
         <h6>Pressão Atmosférica: {pressure}</h6>
         <h6>Humidade: {humidity}</h6>
       </div>
