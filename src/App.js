@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import api from "./services/api";
 
 function App() {
-  const key = "ba11e837904d6c52db0804ff65411068";
+  const key = "Sua key da api";
 
   const [city, setCity] = useState("");
   const [cityName, setCityName] = useState("Digite sua cidade");
