@@ -1,52 +1,19 @@
 import React, { useState, useEffect } from "react";
 import './App.css'
-import { FaSearch } from "react-icons/fa";
 import api from "./services/api";
 
 function App() {
   const key = "ba11e837904d6c52db0804ff65411068";
 
   const [city, setCity] = useState("");
-  const [cityName, setCityName] = useState("Digite sua cidade");
+  const [cityName, setCityName] = useState("Aguardando cidade...");
   const [temp, setTemp] = useState(0);
   const [tempMin, setTempMin] = useState(0);
   const [tempMax, setTempMax] = useState(0);
   const [pressure, setPressure] = useState(0);
   const [humidity, setHumidity] = useState(0);
-  const [description, setDescription] = useState("");
 
-  const dataFormat = d => {
-    let meses = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro"
-    ];
-    let dias = [
-      "Domingo",
-      "Segunda",
-      "Terça",
-      "Quarta",
-      "Quinta",
-      "Sexta",
-      "Sábado"
-    ];
-    let dia = dias[d.getDay()];
-    let data = d.getDate();
-    let mes = meses[d.getMonth()];
-    let ano = d.getFullYear();
-    return `${dia}, ${data} ${mes} ${ano}`;
-  };
-
-  async function getDatas() {
+  async function Get() {
     const response = await api.get(
       `weather?q=${city}&units=metric&APPID=${key}&lang=pt_br`
     );
@@ -56,41 +23,48 @@ function App() {
     setTempMax(result.main.temp_max);
     setPressure(result.main.pressure);
     setHumidity(result.main.humidity);
-    setDescription(result.weather[0].description);
     setCityName(result.name);
   }
 
   useEffect(() => {
-    getDatas();
+    Get();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   return (
-    <div className="container center">
-      <div className="input-group">
-      <br/>
-      <br/>
+    <div className="main">
+      <div className="box">
+        <div className="input-group">
+          <input
+            className="col-lg-6 text-center center"
+            type="text"
+            placeholder="Digite aqui o nome da cidade..."
+            value={city}
+            onChange={e => setCity(e.target.value)}
+            target="_black"
+          />
+          <span className="search"></span>
+          <h1 className="col-lg-12 text-center">{cityName}</h1>
 
-        <input
-          type="text"
-          placeholder="Digite aqui o nome da cidade..."
-          value={city}
-          onChange={e => setCity(e.target.value)}
-          target="_black"
-        />
-        <span className="search"></span>
-        <h1>{cityName}</h1>
-        
+        </div>
+        <div className="text-center">
+          <span className="badge badge-primary">
+            <h2 className="text-center">
+              {Math.round(temp)}
+              <span>°</span>
+            </h2>
+          </span>
+          <div className="row">
+            <div className="col-lg-6">Máxima: <span className="badge badge-danger">{Math.round(tempMax)}°</span></div>
+            <div className="col-lg-6">Mínima: <span className="badge badge-info">{Math.round(tempMin)}°</span></div>
+          </div>
+          <div className="row">
+            <div className="col-lg-6">Pressão Atmosférica: {pressure}</div>
+            <div className="col-lg-6">Humidade: {humidity}</div>
+          </div>
+        </div>
+
       </div>
-      <div class="date">{dataFormat(new Date())}</div>
-        <h2>
-          {Math.round(temp)}
-          <span>°</span>
-        </h2>
-        <h6>{description}</h6>
-        <h6>Máxima: {Math.round(tempMax)}°</h6>
-        <h6>Mínima: {Math.round(tempMin)}°</h6>
-        <h6>Pressão Atmosférica: {pressure}</h6>
-        <h6>Humidade: {humidity}</h6>
     </div>
   );
 }
