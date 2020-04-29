@@ -13,6 +13,7 @@ function App() {
   const [tempMax, setTempMax] = useState(0);
   const [pressure, setPressure] = useState(0);
   const [humidity, setHumidity] = useState(0);
+  const [country, setCountry] = useState("");
 
   async function Get() {
     const response = await api.get(
@@ -25,7 +26,8 @@ function App() {
     setTempMax(result.main.temp_max);
     setPressure(result.main.pressure);
     setHumidity(result.main.humidity);
-    setCityName(result.name);   
+    setCityName(result.name);
+    setCountry(", "+result.sys.country);
   }
 
   useEffect(() => {
@@ -45,7 +47,10 @@ function App() {
             onChange={e => setCity(e.target.value)}
             target="_black"
           />
-          <h1 className="col-lg-12 text-center">{cityName}</h1>
+          <div className="col-lg-12 text-center">
+            <h1 className="">{cityName}</h1>
+            <span className="strong">{country}</span>
+          </div>
           <span className="small col-lg-12 text-center mb-2">{description.toUpperCase()}</span>
 
         </div>
