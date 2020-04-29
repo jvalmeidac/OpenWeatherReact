@@ -14,7 +14,7 @@ function App() {
   const [pressure, setPressure] = useState(0);
   const [humidity, setHumidity] = useState(0);
   const [country, setCountry] = useState("");
-  const [iconCode, setIconCode] = useState("");
+  const [iconCode, setIconCode] = useState("03n");
 
   async function Get() {
     const response = await api.get(
@@ -70,7 +70,7 @@ function App() {
           </div>
           <div className="row">
             <div className="col-lg-6">Pressão Atmosférica: {pressure}</div>
-            <div className="col-lg-6">Humidade: {humidity}</div>
+            <div className="col-lg-6">Humidade: {humidity}%</div>
           </div>
         </div>
 
