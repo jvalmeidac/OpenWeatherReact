@@ -7,6 +7,7 @@ function App() {
 
   const [city, setCity] = useState("");
   const [cityName, setCityName] = useState("Aguardando cidade...");
+  const [description, setDescription] = useState("...");
   const [temp, setTemp] = useState(0);
   const [tempMin, setTempMin] = useState(0);
   const [tempMax, setTempMax] = useState(0);
@@ -19,11 +20,12 @@ function App() {
     );
     const result = response.data;
     setTemp(result.main.temp);
+    setDescription(result.weather[0].description);
     setTempMin(result.main.temp_min);
     setTempMax(result.main.temp_max);
     setPressure(result.main.pressure);
     setHumidity(result.main.humidity);
-    setCityName(result.name);
+    setCityName(result.name);   
   }
 
   useEffect(() => {
@@ -43,8 +45,8 @@ function App() {
             onChange={e => setCity(e.target.value)}
             target="_black"
           />
-          <span className="search"></span>
           <h1 className="col-lg-12 text-center">{cityName}</h1>
+          <span className="small col-lg-12 text-center mb-2">{description.toUpperCase()}</span>
 
         </div>
         <div className="text-center">

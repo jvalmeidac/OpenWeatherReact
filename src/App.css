@@ -1,6 +1,7 @@
-html, body{
+body{
     margin: 0px;
     background-image: url('assets/background.jpg');
+    background-repeat: no-repeat;
 }
 
 .main{
