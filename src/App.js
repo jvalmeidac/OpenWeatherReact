@@ -7,13 +7,14 @@ function App() {
 
   const [city, setCity] = useState("");
   const [cityName, setCityName] = useState("Aguardando cidade...");
-  const [description, setDescription] = useState("...");
+  const [description, setDescription] = useState("");
   const [temp, setTemp] = useState(0);
   const [tempMin, setTempMin] = useState(0);
   const [tempMax, setTempMax] = useState(0);
   const [pressure, setPressure] = useState(0);
   const [humidity, setHumidity] = useState(0);
   const [country, setCountry] = useState("");
+  const [iconCode, setIconCode] = useState("");
 
   async function Get() {
     const response = await api.get(
@@ -27,8 +28,11 @@ function App() {
     setPressure(result.main.pressure);
     setHumidity(result.main.humidity);
     setCityName(result.name);
-    setCountry(", "+result.sys.country);
+    setCountry(", " + result.sys.country);
+    setIconCode(result.weather[0].icon);
   }
+
+  const iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 
   useEffect(() => {
     Get();
@@ -45,14 +49,13 @@ function App() {
             placeholder="Digite aqui o nome da cidade..."
             value={city}
             onChange={e => setCity(e.target.value)}
-            target="_black"
           />
           <div className="col-lg-12 text-center">
             <h1 className="">{cityName}</h1>
             <span className="strong">{country}</span>
           </div>
-          <span className="small col-lg-12 text-center mb-2">{description.toUpperCase()}</span>
-
+            <span className="small col-lg-12 text-center mb-2"><img id="wicon" alt="icon" src={iconUrl}/>{description.toUpperCase()}</span>
+            
         </div>
         <div className="text-center">
           <span className="badge badge-primary">
