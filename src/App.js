@@ -14,7 +14,7 @@ function App() {
   const [pressure, setPressure] = useState(0);
   const [humidity, setHumidity] = useState(0);
   const [country, setCountry] = useState("");
-  const [iconCode, setIconCode] = useState("03n");
+  const [iconCode, setIconCode] = useState("");
 
   async function Get() {
     const response = await api.get(
@@ -35,8 +35,8 @@ function App() {
   const iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 
   useEffect(() => {
-    Get();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    Get(); 
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
 
   return (
@@ -54,9 +54,12 @@ function App() {
             <h1 className="">{cityName}</h1>
             <span className="strong">{country}</span>
           </div>
-            <span className="small col-lg-12 text-center mb-2"><img id="wicon" alt="icon" src={iconUrl}/>{description.toUpperCase()}</span>
-            
-        </div>
+                  <span className="small col-lg-12 text-center mb-2">
+                    {iconCode === "" ? <br/> : <img id="wicon" alt="icon" src={iconUrl} />}
+                    <br/>
+                    {description.toUpperCase()}
+                  </span>
+      </div>
         <div className="text-center">
           <span className="badge badge-primary">
             <h2 className="text-center">
